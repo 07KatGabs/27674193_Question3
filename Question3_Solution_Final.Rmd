@@ -1,0 +1,278 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Financial Aid to Ukraine by EU members"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Nico Katzke}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Katlego Gababonwe"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University, Western Cape" # First Author's Affiliation
+Email1: "27674193\\@sun.ac.za." # First Author's Email address
+
+CorrespAuthor_1: FALSE # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+# keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+# JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+abstract: |
+ This report aims to discuss the contribution of European Union member countries to Ukrainian aid by assessing whether the EU is doing enough to support Ukraine with resources in its fight against Russia.
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+list.files("C:/Users/Katli Gabs/Documents/Data Science/27674193/27674193/Question3/Q3ans/Q3ans/code/Q3Plots.R", full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+Financial_alloc <- read.csv("C:/Users/Katli Gabs/Documents/Data Science/27674193/27674193/Question3/Question3/data/Ukraine_Aid/Financial Allocations.csv")
+Financial_commit <- read.csv("C:/Users/Katli Gabs/Documents/Data Science/27674193/27674193/Question3/Question3/data/Ukraine_Aid/Financial Commitments.csv")
+
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Introduction \label{Introduction}
+
+The European Union (EU) took swift action in response to the large-scale invasion of Ukraine by Russia in 2022. The EU has implemented restrictive measures that have significantly impacted Russia. Meanwhile, the EU has increased its support for Ukraine through political, humanitarian, military, and financial aid, with the goal of strengthening Ukraine's economy, society, and future reconstruction efforts. This study has found that some EU member countries are still lagging behind in terms of support, despite the pledges they made.
+
+\newpage
+# Top EU financial Contributors \label{Top EU financial Contributors}
+
+The graph below shows financial contributions by EU members and only six member countries contributed more that 0.7 billion to Ukraine Aid while others contributed less. 
+
+
+```{r,  warning =  FALSE, fig.align = 'center', fig.cap = "Contributing EU Countries to Ukraine Aid.\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+  # Source the plot with a function, and then print it as below.
+    # Going through the function, you will note that I'm able to source other functions in the code folder in these functions too.
+# That's the beauty of centralizing your functions and loading it in the top.
+EU_countries <- c("Germany", "France", "Italy", "Spain", "Poland", "Netherlands",
+                  "Belgium", "Czech Republic", "Greece", "Portugal", "Hungary",
+                  "Sweden", "Austria", "Bulgaria", "Denmark", "Finland", "Slovakia",
+                  "Ireland", "Croatia", "Lithuania", "Slovenia", "Latvia", "Estonia",
+                  "Cyprus", "Luxembourg", "Malta")
+
+
+# Filter financial allocation data for EU countries
+Financial_alloc_eu <- Financial_alloc %>%
+  filter(Country %in% EU_countries)
+
+# Aggregate and rank by financial allocations
+Finaid_ranking_alloc <- Financial_alloc_eu %>%
+  group_by(Country) %>%
+  summarise(Total_Allocation = sum(Financial.allocations...billion., na.rm = TRUE)) %>%
+  arrange(desc(Total_Allocation))
+
+# Filter financial commitment data for EU countries
+Financial_commit_eu <- Financial_commit %>%
+  filter(Country %in% EU_countries)
+
+# Aggregate and rank by financial commitments
+Finaid_ranking_commit <- Financial_commit_eu %>%
+  group_by(Country) %>%
+  summarise(Total_Commitment = sum(Financial.commitments...billion., na.rm = TRUE)) %>%
+  arrange(desc(Total_Commitment))
+
+active_support_threshold <- 0.7
+Aid_ranking_alloc <- Finaid_ranking_alloc %>%
+  mutate(Active_Support = ifelse(Total_Allocation > active_support_threshold, "Active Support", "Not Active"))
+
+
+#Create bar chart with color coding
+
+g_aid <- ggplot(Aid_ranking_alloc, aes(x = reorder(Country, Total_Allocation), y = Total_Allocation, fill = Active_Support)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(title = "Top Contributing EU Countries to Ukraine Aid",
+       x = "Country",
+       y = "Total Financial Allocations (billion)",
+       fill = "Support Status") +
+  scale_fill_manual(values = c("Active Support" = "green", "Not Active" = "red")) +
+  theme_minimal()
+
+g_aid
+
+```
+
+\newpage
+
+# Contributions by EU vs Non_EU members \label{Contributions by EU vs Non_EU members}
+
+The table below shows the contribution of European Union members compared to non EU members. The data suggests that EU members contribute a lot that non EU members. However, the contributions of EU members are still far less compared to the commitments. 
+
+```{r,  warning =  FALSE, fig.align = 'center', fig.cap = "Total Financial Allocations.\\label{Figure2}", fig.ext = 'png', fig.height = 6, fig.width = 6}
+
+  #TO COMPARE EU VS NON EU ALLOCATION
+
+financial_alloc_df <- data.frame(Financial_alloc)
+
+# Function to separate EU from non-EU members and summarize financial allocations
+separate_and_summarize <- function(financial_alloc_df) {
+    financial_alloc_df %>%
+        mutate(EU.status = ifelse(EU.member == 1, "EU", "Non-EU")) %>%
+        group_by(EU.status) %>%
+        summarise(Total.Financial.Allocations = sum(Financial.allocations...billion., na.rm = TRUE))
+}
+
+# Apply the function to the data
+EU_vs_nonEU_summ <- separate_and_summarize(financial_alloc_df)
+
+g_EU_nonEU <- ggplot(EU_vs_nonEU_summ, aes(x = EU.status, y = Total.Financial.Allocations, fill = EU.status)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    labs(title = "Total Financial Allocations: EU vs Non-EU Members",
+         x = "Membership Status",
+         y = "Total Financial Allocations (in billion)") +
+    theme_minimal() +
+    scale_fill_manual(values = c("EU" = "orange", "Non-EU" = "green"))
+
+g_EU_nonEU
+
+```
+\newpage
+
+# Financial Commitments by EU members \label{Financial Commitments by EU members}
+
+The table below shows a horizontal bar chart of EU countries' financial commitment; the top 5 countries in the graph are not among the top contributors. This indicates that some countries are still lagging behind in actualizing their commitment. This means there is room for the EU to contribute more than they are currently doing to aid the UK.  
+
+```{r,  warning =  FALSE, fig.align = 'center', fig.cap = "Financial Commitments.\\label{Figure2}", fig.ext = 'png', fig.height = 6, fig.width = 6}
+
+  #TO COMPARE EU VS NON EU ALLOCATION
+
+EU_countries <- c("Germany", "France", "Italy", "Spain", "Poland", "Netherlands", 
+                  "Belgium", "Czech Republic", "Greece", "Portugal", "Hungary", 
+                  "Sweden", "Austria", "Bulgaria", "Denmark", "Finland", "Slovakia",
+                  "Ireland", "Croatia", "Lithuania", "Slovenia", "Latvia", "Estonia",
+                  "Cyprus", "Luxembourg", "Malta")
+
+
+# Filter financial allocation data for EU countries
+Financial_alloc_eu <- Financial_alloc %>%
+  filter(Country %in% EU_countries)
+
+# Aggregate and rank by financial allocations
+Finaid_ranking_alloc <- Financial_alloc_eu %>%
+  group_by(Country) %>%
+  summarise(Total_Allocation = sum(Financial.allocations...billion., na.rm = TRUE)) %>%
+  arrange(desc(Total_Allocation))
+
+# Filter financial commitment data for EU countries
+Financial_commit_eu <- Financial_commit %>%
+  filter(Country %in% EU_countries)
+
+# Join the datasets on the 'Country' column
+combined_data <- Financial_alloc_eu %>%
+  left_join(Financial_commit_eu, by = "Country", suffix = c("_alloc", "_commit"))
+
+# Select only relevant columns for Financial Allocations and Financial Commitments
+combined_financial <- combined_data %>%
+  select(Country, Financial.allocations...billion., Financial.allocations...billion.)
+
+# Reshape the data to long format for plotting
+combined_long <- combined_financial %>%
+  pivot_longer(cols = starts_with("Financial"), 
+               names_to = "Type", 
+               values_to = "Amount")
+
+# Rename the columns for better readability
+combined_df <- combined_long %>%
+  mutate(Type = recode(Type, 
+                       `Financial.allocations...billion._alloc` = "Financial Allocations",
+                       `Financial.allocations...billion._commit` = "Financial Commitments"))
+
+# Create the grouped bar chart
+g_financial <- ggplot(combined_df, aes(x = reorder(Country, Amount), y = Amount, fill = Type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  labs(title = "Financial Commitment by EU Countries",
+       x = "Country",
+       y = "Total Amount (billion)",
+       fill = "Type of Support") +
+  scale_fill_manual(values = c("Financial Allocations" = "blue", "Financial Commitments" = "orange")) +
+  theme_minimal()
+
+g_financial
+
+```
+\newpage
+
+# Conclusion \label{Conclusion}
+
+The European Union has made commendable efforts by standing in solidarity with Ukraine in its war against Russia. Some EU countries have made progress in making contributions, while others are still lagging behind. The unity of EU countries and the fulfillment of their commitments are fundamental to Ukraine's fight against Russia.
